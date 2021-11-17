@@ -1,0 +1,240 @@
+:root {
+	 --rad: 0.7rem;
+	 --dur: 0.3s;
+	 --color-dark: #2f2f2f;
+	 --color-light: #fff;
+	 --color-brand: #f51b1b;
+	 --font-fam: 'Lato', sans-serif;
+	 --height: 5rem;
+	 --btn-width: 6rem;
+	 --bez: cubic-bezier(0, 0, 0.43, 1.49);
+}
+ #recetteSearchBar {
+	 position: fixed;
+	 text-align:left !important;
+	 background: var(--color-brand);
+	 border-radius: var(--rad);
+	 margin-right: 50px;
+     width: calc(100% - 300px);
+	 width: -webkit-calc(100% - 300px);
+	 width: -moz-calc(100% - 300px);
+}
+ .recetteSearchInput, #recetteSearchBoutton {
+	 height: var(--height);
+	 font-family: var(--font-fam);
+	 border: 0;
+	 color: var(--color-dark);
+	 font-size: 1.8rem;
+}
+ .recetteSearchInput[type="search"] {
+	 outline: 0;
+	 width: 100%;
+	 background: var(--color-light);
+	 padding: 0 1.6rem;
+	 border-radius: var(--rad);
+	 appearance: none;
+	 transition: all var(--dur) var(--bez);
+	 transition-property: width, border-radius;
+	 z-index: 1;
+	 position: relative;
+}
+ #recetteSearchBoutton {
+	 display: none;
+	 position: absolute;
+	 top: 0;
+	 right: 0;
+	 width: var(--btn-width);
+	 font-weight: bold;
+	 background: var(--color-brand);
+	 border-radius: 0 var(--rad) var(--rad) 0;
+}
+ .recetteSearchInput:not(:placeholder-shown) {
+	 border-radius: var(--rad) 0 0 var(--rad);
+	 width: calc(100% - var(--btn-width));
+}
+ .recetteSearchInput:not(:placeholder-shown) + #recetteSearchBoutton {
+	 display: block;
+	 cursor:pointer;
+}
+ #recetteSearchLabel {
+	 position: absolute;
+	 clip: rect(1px, 1px, 1px, 1px);
+	 padding: 0;
+	 border: 0;
+	 height: 1px;
+	 width: 1px;
+	 overflow: hidden;
+}
+.recetteTexte:not form {
+	text-align:center;
+}
+.ligneRecette{
+	display:flex;
+}
+.listBG{
+	/*background-image: url(image/listbg.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;*/
+	margin-top:100px;
+	margin-left:125px;
+	display:grid;
+	transition:0.5s;
+	grid-template-columns: auto auto auto;
+}
+.listBGActif{
+	margin-left:250px!important;
+}
+.card{
+	margin-right:20px;
+	margin-bottom:20px;
+}
+.uneRecette{
+	width:calc(100vw - 100px);
+	margin-top:75px;
+	margin-left:50px;
+	margin-right:50px;
+	display:grid;
+	transition:0.5s;
+	min-height:calc(100vh - 100px);
+	height:fit-content;
+}
+.laRecette{
+	padding-bottom:20px;
+	display:grid;
+	grid-template-columns: 1fr 1fr;
+	width:100%;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.recetteGaucheGrid{
+	margin-top:20px;
+	margin-left:25px;
+	display:grid;
+	gap: 20px;
+	grid-template-rows:auto auto auto auto;
+}
+.recetteDroiteGrid{
+	margin-top:20px;
+	margin-right:25px;
+	display:grid;
+	gap: 20px;
+	grid-template-rows:auto auto auto auto;
+}
+.recetteTitre{
+	text-align:center;
+	font-size:2rem;
+}
+.recetteNote{
+	text-align:center;
+}
+.recetteImage{
+	text-align:center;
+}
+.recetteTemps{
+	text-align:center;
+}
+.recetteAuteur{
+	text-align:center;
+}
+.recetteVideo{
+	text-align:center;
+}
+.titreSection{
+	text-align:center;
+	font-size:1.5rem;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.gridIngredient{
+	display:grid;
+	grid-template-columns:auto;
+	text-align:center;
+}
+.recettePresentation{
+	text-align:center;
+}
+.vnRecette{
+	text-align:center;
+}
+.recetteNote2{
+	display:none;
+	text-align:center;
+}
+.recetteEtape{
+	text-align:center;
+}
+.recetteEtape2{
+	display:none;
+}
+
+@media only screen and (max-width: 800px) {
+	.uneRecette{
+		margin-left:0 !important;
+		margin-right:0 !important;
+		width:100% !important;
+	}
+  .laRecette {
+    grid-template-columns: 1fr;
+  }
+  .gridIngredient{
+	  text-align:center;
+  }
+  .etapeRecette{
+	  text-align:center;
+  }
+  .recetteNote2{
+	display:block;
+  }
+  .recetteEtape2{
+	display:block;
+  }
+  .recetteNote{
+	display:none;
+  }
+  .recetteEtape{
+	display:none;
+  }
+  .listBG{
+	  grid-template-columns: auto auto;
+	  margin-left:0 !important;
+  }
+  .recetteGaucheGrid{
+	  margin-left:0;
+  }
+  .recetteDroiteGrid{
+	  margin-right:0;
+  }
+    .card{
+	  margin-left:auto;
+	  margin-right:auto;
+  }
+}
+
+@media only screen and (max-width: 600px){
+	.listBG{
+	  grid-template-columns: auto;
+	  margin-left:0 !important;
+  }
+  .card{
+	  margin-left:auto;
+	  margin-right:auto;
+  }
+}
+
+.recetteInput{
+	height:30px;
+	width: 80%;
+	margin:0 !important;
+    padding:6px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.creationTitre{
+	margin:10px;
+}
+
+
