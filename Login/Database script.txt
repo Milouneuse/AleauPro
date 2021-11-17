@@ -1,0 +1,165 @@
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `username` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  nom varchar(100) NOT NULL,
+  prenom varchar(20) NOT NULL,
+  sexe varchar(20) NOT NULL,
+  telephone varchar(100) NOT NULL,
+  dateNaissance date NOT NULL,
+  token varchar(10),
+  tokenExpire DATETIME,
+  active varchar(1),
+  tokenCreation varchar(10),
+  admin varchar(1),
+  entraineur varchar(1)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE entraineurInfo (
+    id int NOT NULL,
+    ecole VARCAHR(20) NOT NULL,
+    travail VARCAHR(20) NOT NULL,
+    FOREIGN KEY (id) REFERENCES users(id)
+);
+
+CREATE TABLE demandeEnCours (
+    id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idClient int(11) NOT NULL, 
+    ecole VARCHAR(20) NOT NULL,
+    anneeGraduation date NOT NULL,
+    experienceT date NOT NULL,
+    travail VARCHAR(20) NOT NULL,
+    dateTravail date,
+    imgPermis VARCHAR(255) NOT NULL,
+    imgDiplome VARCHAR(255) NOT NULL,
+    bio text NOT NULL,
+    FOREIGN KEY (idClient) REFERENCES clients(id)
+);
+
+ALTER TABLE `entraineurInfo` ADD UNIQUE(`id`);
+
+CREATE VIEW view_entraineur AS
+SELECT c.id, username, nom, prenom, sexe, dateNaissance, ecole, travail
+FROM clients c inner join entraineurInfo e on c.id = e.id
+WHERE entraineur = 1;
+
+
+CREATE TABLE abonnementEntraineur (
+    id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idClient int(11) NOT NULL, 
+  	idEntraineur int(11) NOT NULL,
+    dateInsciption date not null,
+    dateFin date not null,
+    FOREIGN KEY (idClient) REFERENCES clients(id),
+    FOREIGN KEY (idEntraineur) REFERENCES entraineurInfo(id)
+);
+
+CREATE TABLE Video
+(
+VideoID NUMBER(10) CONSTRAINT pkVideoID PRIMARY KEY,
+VideoURL VARCHAR(100)
+);
+--Exercice Gym oui ou non besoin d'un gym a compléter plus tard
+--Video id aussi
+CREATE TABLE Exercice
+(
+ExerciceID NUMBER(10) CONSTRAINT pkExerciceID PRIMARY KEY,
+ExerciceVideoID NUMBER(10) NULL,
+CONSTRAINT fkExerciceVideoID FOREIGN KEY(ExerciceVideoID) 
+REFERENCES Video(VideoID),
+ExerciseImage VARCHAR(20) NULL,
+ExerciceType VARCHAR(20) NOT NULL,
+ExerciceNom VARCHAR(40) NOT NULL,
+ExerciceDescription VARCHAR(75) NOT NULL,
+ExerciceGym CHAR(3)
+);
+
+CREATE TABLE TypeMuscle
+(
+MuscleID int(10) PRIMARY KEY not null AUTO_INCREMENT,
+MuscleNom VARCHAR(20) not NULL
+);
+
+
+insert into TypeMuscle (MuscleNom) values ("Biceps"); -- 1
+insert into TypeMuscle (MuscleNom) values ("Triceps"); -- 2
+insert into TypeMuscle (MuscleNom) values ("Épaules"); -- 3
+insert into TypeMuscle (MuscleNom) values ("Pectoraux"); -- 4
+insert into TypeMuscle (MuscleNom) values ("Dos"); -- 5
+insert into TypeMuscle (MuscleNom) values ("Jambes"); -- 6
+insert into TypeMuscle (MuscleNom) values ("Abdo"); -- 7
+
+-- Insert Exercices
+-- Biceps 1
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(1,'Dumbell curl',' Flexion des avant-bras avec des haltères');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(1,'Concentration curl','Flexion de l''avant-bras coude calé sur quelque chose');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(1,'Hammer curl','Flexion de l''avant-bras avec haltères tenus en prise marteau');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(1,'Cable curl','Flexion des avant-bras à la poulie basse');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(1,'Barbell curl','Flexion des avant-bras à la barre');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(1,'Reverse curl','Flexion des avant-bars mains en pronation');
+
+-- Triceps 2
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(2,'Triceps pushdown','Triceps à la poulie haute, mains en pronation');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(2,'Reverse grip triceps pushdown','Reverse grip triceps pushdown');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(2,'Lying triceps extension','Extension des avant-bras à la barre couché sur un banc');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(2,'Dumbbell triceps extension','Extension des avant-bras avec haltères');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(2,'French press','Extension des avant-bras assis à la barre');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(2,'Kickback','Extension des avant-bras avec un haltère buste penché en avant');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(2,'Dip','Répulsion sur un banc');
+
+-- Épaules 3
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(3,'Dumbell press','Développé avec haltères');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(3,'Arnold press','Développé avant avec rotation du poignet');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(3,'Front raise','Elévation en avant');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(3,'Side raise','Elévation latérale des bras');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(3,'Bent over raise','Elévation latérale, buste penché en avant');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(3,'Upright row','Tirage vertical à la barre');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(3,'Rear deltoid machine','Arrière des épaules à la machine');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(3,'Shrug','Haussement d''épaules');
+
+-- Pectoraux 4
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(4,'Bench press','Développé-couché');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(4,'Close grip bench press','Développé-couché, mains resserrées');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(4,'Incline press','Développé-incliné');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(4,'Decline press','Développé-décliné');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(4,'Push-ups','Pompes');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(4,'Fly','Ecarté-couché avec haltères');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(4,'Peck deck','Ecarté à la machine');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(4,'Cable crossover','Ecarté debout à la poulie vis-à-vis');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(4,'Pullover','Pullover');
+
+-- Dos 5
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(5,'Chin up','Traction à la barre fixe');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(5,'Pull up','Traction à la barre fixe, mains en supination');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(5,'Lat pulldown','Tirage poitrine à la poulie haute');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(5,'Close grip pulldown','Tirage à la poulie haute avec une poignée à prise rapprochée');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(5,'Cable row','Tirage à la poulie basse prise serrée');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(5,'Dumbell row','Tirage horizontal avec un haltère');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(5,'Bent over barbell row','Tirage horizontal à la barre');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(5,'T-bar row','Tirage à la barre en T');
+
+-- Jambes 6
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Stiff legged deadlift','Soulevé de terre, jambes tendues');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Deadlift','Soulevé de terre');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Hyperextension','Extension du buste au banc');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Squat','Squat ou flexion des cuisses');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Front squat','Squat barre devant');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Plié squat','Squat jambes écartées pointes des pieds vers l''extérieur');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Leg press','Presse à cuisses');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Leg extension','Extension des jambes à la machine');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Leg curl','Ischio-jambiers à la machine');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Goodmorning','Flexion du buste en avant');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Machine adductor','Adducteurs à la machine');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Machine abductor','Abducteurs à la machine');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Lunge','Fente');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Hip extension','Extension de la hanche');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Lateral leg raise','Abduction de la hanche');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values(6,'Pelvis lift / Hip trust','Relevé de bassin au sol');
+
+-- Abdo 7
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values('7','Crunches','Enroulement vertébral');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values('7','Sit up','Relevé du buste au sol');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values('7','Hanging knee raise','Relevé des genoux à la chaise abdominale');
+insert into Exercice(TypeMuscle, ExerciceNom, ExerciceDescription) values('7','Side bend','Flexion latéral du buste');
